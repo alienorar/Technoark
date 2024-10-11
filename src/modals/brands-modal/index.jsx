@@ -5,11 +5,11 @@ const { Option } = Select;
 
 const Index = ({ visible, onOk, handleClose, update, getData, categories, notify }) => {
     const [form] = Form.useForm();
-    const [edit, setEdit] = useState({
-        name: "",
-        categoryId: "",
-        description: "",
-    });
+    // const [edit, setEdit] = useState({
+    //     name: "",
+    //     categoryId: "",
+    //     description: "",
+    // });
 
     useEffect(() => {
         if (update?.id) {
@@ -31,11 +31,13 @@ const Index = ({ visible, onOk, handleClose, update, getData, categories, notify
 
 
     const onFinish = async (value) => {
-        setEdit({
+        
+        const demo = {
             name: value?.name,
             description: value?.description,
             categoryId: parseInt(value?.category_id)
-        })
+        }
+
 
         let formData = new FormData();
         formData.append("name", value?.name);
@@ -45,7 +47,7 @@ const Index = ({ visible, onOk, handleClose, update, getData, categories, notify
 
         try {
             if (update?.id) {
-                const res = await brands.update(update?.id, edit);
+                const res = await brands.update(update?.id, demo);
                 if (res.status === 200) {
                     notify(res.data.message)
                     handleClose();
